@@ -120,7 +120,9 @@
     .SkillLogo {
         background-image: url(src/SkillLogo.jpeg);
     }
-    .avatar:hover{ transform: translateY(-6px) rotate(-4deg) scale(1.03); }
+    .avatar:hover, .AIluryLogo:hover, .SkillLogo:hover{
+        transform: translateY(-6px) rotate(-4deg) scale(1.03);
+    }
     .hero h1{ margin:0; font-size:20px; color:#fff;}
     .hero p{ margin:0; font-size:13px; color: rgba(230,240,255,0.84) }
     .meta .pill{
@@ -203,6 +205,7 @@
         0% {
             opacity: 0;
             pointer-events: none;
+            display: block;
         }
         10% {
             opacity: 1;
@@ -214,11 +217,10 @@
         100% {
             opacity: 0;
             pointer-events: none;
+            display: none;
         }
     }
-    
-    .drawing:hover:after {
-        content: "click to toggle time laps";
+    .infoContainer {
         top: 10px;
         left: 10px;
         position: absolute;
@@ -230,8 +232,14 @@
         color: #ffffff;
         font-weight: bold;
         border-radius: 10px;
-        backdrop-filter: blur(10px)
+        backdrop-filter: blur(10px);
+        display: none;
+        opacity: 0;
         animation: easeInAnimation 2s ease forwards;
+    }
+    .drawing:hover .infoContainer {
+        opacity: 1;
+        display: block;
     }
     .drawingVideo {
         height: 100%;
@@ -437,9 +445,15 @@
                     </div>
                 </div>
                 <div class="drawings-content">
-                    <div class="drawing" style="background-image: url(src/Gears_Of_Life_Book_Cover.png);" onclick="toggleTimeLaps('src/Gears_Of_Life_Book_Cover_Time_Laps.mp4', this)"></div>
-                    <div class="drawing" style="background-image: url(src/The_Light_From_Above.png);" onclick="toggleTimeLaps('src/The_Light_From_Above_Time_Laps.mp4', this)"></div>
-                    <div class="drawing" style="background-image: url(src/Red_Sun_Seed.png);" onclick="toggleTimeLaps('src/Red_Sun_Seed_Time_Laps.mp4', this)"></div>
+                    <div class="drawing" style="background-image: url(src/Gears_Of_Life_Book_Cover.png);" onclick="toggleTimeLaps('src/Gears_Of_Life_Book_Cover_Time_Laps.mp4', this)">
+                        <div class="infoContainer" >click to toggle time laps</div>
+                    </div>
+                    <div class="drawing" style="background-image: url(src/The_Light_From_Above.png);" onclick="toggleTimeLaps('src/The_Light_From_Above_Time_Laps.mp4', this)">
+                        <div class="infoContainer" >click to toggle time laps</div>
+                    </div>
+                    <div class="drawing" style="background-image: url(src/Red_Sun_Seed.png);" onclick="toggleTimeLaps('src/Red_Sun_Seed_Time_Laps.mp4', this)">
+                        <div class="infoContainer" >click to toggle time laps</div>
+                    </div>
                 </div>
             </section>
             <section class="sec" id="ui-ux-design-sec">
