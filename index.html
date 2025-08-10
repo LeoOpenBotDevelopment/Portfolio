@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Leo — Portfolio</title>
+<style>
+    :root{                     #0b0e17
+        --bg-1: 12, 18, 36;
+        --accent-1: 142, 95, 255;
+        --accent-2: 68, 199, 234;
+        --accent-3: 255, 115, 135;
+        --glass: rgba(255,255,255,0.06);
+        --blur-amt: 28px;
+        --transition: 360ms cubic-bezier(.2,.9,.25,1);
+        font-family: Inter, system-ui, sans-serif;
+    }
+    
+    html,body{
+        height:100%;
+        margin:0;
+    }
+    
+    body{
+        background:
+            radial-gradient(1200px 600px at 10% 20%, rgba(var(--accent-2),0.06), transparent 10%),
+            radial-gradient(900px 500px at 90% 80%, rgba(var(--accent-1),0.06), transparent 12%),
+            #071020;
+        color:#e7eefc;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding:20px;
+        overflow:hidden;
+    }
+    
+    /* stage container */
+    .stage{
+        position:relative;
+        display:grid;
+        grid-template-columns: 340px 1fr;
+        grid-template-rows: auto 1fr;
+        gap:20px;
+        padding:30px;
+        max-width:1200px;
+        width:100%;
+        height:auto;
+        border-radius:20px;
+        backdrop-filter: blur(var(--blur-amt));
+        background: linear-gradient(180deg, rgba(var(--accent-1),0.02), rgba(6,8,14,0.2));
+        border:1px solid rgba(255,255,255,0.03);
+        box-shadow:0 10px 40px rgba(2,6,23,0.6);
+        overflow: hidden;
+        max-height: 100dvh;
+        overflow-y: auto;
+    }
+    
+    /* background circles */
+    .background-circles{
+        position:absolute;
+        inset:0;
+        z-index:0;
+        pointer-events:none;
+        filter: blur(42px) saturate(1.2);
+        height: 100%;
+        overflow: hidden;
+    }
+    .bg-circle{
+        position:absolute;
+        border-radius:50%;
+        mix-blend-mode:screen;
+        opacity:0.95;
+        animation: float 18s linear infinite;
+    }
+    .bg-circle.c1{width:720px;height:720px; left:-10%; top:50%; background: radial-gradient(circle at 30% 30%, rgba(var(--accent-1),0.9), transparent 40%);}
+    .bg-circle.c2{width:620px;height:620px; right:-8%; bottom:-6%; background: radial-gradient(circle at 60% 40%, rgba(var(--accent-2),0.95), transparent 38%); animation-duration:22s}
+    .bg-circle.c3{width:560px;height:560px; left:20%; bottom:-50%; background: radial-gradient(circle at 70% 60%, rgba(var(--accent-3),0.95), transparent 40%); animation-duration:20s}
+    @keyframes float{
+        0%{transform: translateY(0) rotate(0deg)}
+        50%{transform: translateY(-28px) rotate(22deg)}
+        100%{transform: translateY(0) rotate(0deg)}
+    }
+    
+    /* profile column */
+    .profile{
+        z-index:2;
+        display:flex;
+        flex-direction:column;
+        gap:20px;
+    }
+    .hero{
+        background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+        border-radius:16px;
+        padding:22px;
+        border:1px solid rgba(255,255,255,0.03);
+        box-shadow:0 6px 20px rgba(3,6,18,0.6);
+        display: flex;
+        gap:16px;
+        align-items:center;
+    }
+    .avatar, .AIluryLogo, .SkillLogo{
+        width: 84px;
+        height: 84px;
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(var(--accent-1),0.14), rgba(var(--accent-2),0.08));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 28px;
+        color: white;
+        transition: transform var(--transition);
+        background-position: 0;
+        background-size: 100%;
+        background-image: url(/myAvatar.png);
+    }
+    .AIluryLogo {
+        background-image: url(/src/AIluryLogo.png);
+    }
+    .SkillLogo {
+        background-image: url(/src/SkillLogo.jpeg);
+    }
+    .avatar:hover{ transform: translateY(-6px) rotate(-4deg) scale(1.03); }
+    .hero h1{ margin:0; font-size:20px; color:#fff;}
+    .hero p{ margin:0; font-size:13px; color: rgba(230,240,255,0.84) }
+    .meta .pill{
+        background: rgba(255,255,255,0.02);
+        padding:8px 12px;
+        border-radius:999px;
+        border:1px solid rgba(255,255,255,0.03);
+        font-size:13px;
+        font-weight:600;
+        box-shadow: 0 6px 18px rgba(6,8,20,0.35);
+        transition: transform var(--transition);
+    }
+    .meta .pill:hover{ transform: translateY(-6px) scale(1.02); }
+    .meta{ display:flex;flex-direction:column;gap:10px; }
+    .meta .row{ display:flex;flex-wrap:wrap;gap:10px; }
+    
+    /* board column */
+    .board{
+        z-index:2;
+        display:flex;
+        flex-direction:column;
+        gap:16px;
+    }
+    .board-header h2{margin:0;font-size:16px;color:#fff;}
+    .board-sub{
+        color:rgba(220,230,255,0.75);font-size:13px;
+        margin-bottom: 15px;
+    }
+    .content{
+        position:relative;
+        display:grid;
+        grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+        grid-auto-rows: minmax(160px,auto);
+        gap:30px;
+        padding:20px;
+        border-radius:14px;
+        background: linear-gradient(180deg, rgba(10,14,28,0.08), rgba(6,8,14,0.15));
+        border:1px solid rgba(255,255,255,0.03);
+    }
+    .drawings-content {
+        position:relative;
+        display:block;
+        padding:20px;
+        border-radius:14px;
+        background: linear-gradient(180deg, rgba(10, 14, 28, 0.08), rgba(6, 8, 14, 0.15));
+        border:1px solid rgba(255, 255, 255, 0.03);
+        max-height: 520px;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+    .card{
+        background: rgba(255,255,255,0.02);
+        border:1px solid rgba(255,255,255,0.03);
+        border-radius:12px;
+        padding:18px;
+        box-shadow:0 12px 28px rgba(2,6,20,0.6);
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+        transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .drawing {
+        width: 100%;
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.03);
+        border-radius: 12px;
+        padding: 0;
+        box-shadow: 0 12px 28px rgba(2,6,20,0.6);
+        display: flex;
+        transition: transform var(--transition), box-shadow var(--transition);
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        height: 500px;
+        background-position: 0;
+        background-size: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+    @keyframes easeInAnimation {
+        0% {
+            opacity: 0;
+            pointer-events: none;
+        }
+        10% {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        90% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            pointer-events: none;
+        }
+    }
+    
+    .drawing:hover:after {
+        content: "click to toggle time laps";
+        top: 10px;
+        left: 10px;
+        position: absolute;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: left;
+        padding: 10px;
+        color: #ffffff;
+        font-weight: bold;
+        border-radius: 10px;
+        backdrop-filter: blur(10px)
+        animation: easeInAnimation 2s ease forwards;
+    }
+    .drawingVideo {
+        height: 100%;
+        width: 100%;
+        background-position: 0;
+        background-size: 100%;
+        object-fit: cover;
+    }
+    .card:hover, .drawing:hover{ transform: translateY(-10px) scale(1.02); box-shadow: 0 30px 70px rgba(2,10,30,0.6); }
+    .card h3{margin:0;font-size:16px;}
+    .card p{margin:0;font-size:13px;color:rgba(220,230,255,0.86);}
+    .meta-row{display:flex;flex-wrap:wrap;gap:8px;}
+    .link-btn{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 13px;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.06);
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        transition: transform var(--transition);
+    }
+    .level-bar {
+        display: inline-flex;
+        padding: 0;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 13px;
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.06);
+        cursor: pointer;
+        text-decoration: none;
+        color: inherit;
+        transition: transform var(--transition);
+        height: 30px;
+    }
+    .bar-fill {
+        height: 100%;
+        width: 0;
+        background: rgba(var(--accent-1), 0.9);
+        border: none;
+        border-radius: 10px;
+    }
+    #programming-languages-sec .card {
+        height: 70px;
+    }
+    .link-btn:hover{ transform: translateY(-6px) rotate(-2deg); }
+    ul {
+        padding-left: 20px;
+        margin: 0;
+    }
+    li {
+        margin: 0;
+        padding: 0;
+    }
+    .sec {
+        display: none;
+    }
+    #hero-text {
+        width: calc(100% - 90px);
+    }
+    /* responsive adjustments */
+    @media(max-width:900px){
+        .stage{grid-template-columns: 1fr;}
+        .projects{grid-template-columns:1fr;}
+        .background-circles{
+            height: auto;
+            overflow: visible;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="stage">
+        <div class="background-circles">
+            <div class="bg-circle c1"></div>
+            <div class="bg-circle c2"></div>
+            <div class="bg-circle c3"></div>
+        </div>
+    
+        <div class="profile">
+            <div class="hero" onclick="showSec('me-sec')">
+                <div class="avatar"></div>
+                <div id="hero-text">
+                    <h1>Leo — Maximilian de Groot</h1>
+                    <p>Modern UI/UX designer & front-end dev -- HTML, CSS, JavaScript</p>
+                </div>
+            </div>
+            <div class="meta">
+                <div class="row">
+                    <div class="pill" onclick="showSec('me-sec')">Born: 2010</div>
+                    <div class="pill" onclick="showSec('programming-languages-sec')">Programming since: late 2023</div>
+                    <div class="pill" onclick="showSec('me-sec')">Available: always</div>
+                    <div class="pill" onclick="showSec('languages-sec')">Languages: 4</div>
+                </div>
+                <div class="row">
+                    <div class="pill" onclick="showSec('programming-languages-sec')">Languages: HTML · CSS · JavaScript</div>
+                    <div class="pill" onclick="showSec('ui-ux-design-sec')">Skills: Website UI & UX · Design</div>
+                </div>
+                <div class="row">
+                    <div class="pill" onclick="showSec('programming-languages-sec')">Hobby: Programming</div>
+                    <div class="pill" onclick="showSec('collection-sec')">Hobby: Collecting LEGO®</div>
+                    <div class="pill" onclick="showSec('drawing-sec')">Hobby: Drawing</div>
+                    <div class="pill" onclick="showSec('ui-ux-design-sec')">Hobby: Designing</div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="board">
+            <section class="sec" id="projects-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>Big Projects</h2>
+                        <div class="board-sub">A view of my bigger projects.</div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h3>AIlury Studio</h3>
+                        <p>Code Editor — polished UI, responsive components, aesthetic, great for junior developers.</p>
+                        <div class="meta-row">
+                            <a class="link-btn" href="https://ailury.com" target="_blank">Open ailury.com</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>AIlury Chat</h3>
+                        <p>International chat webapp — Easy to use, very accessible.</p>
+                        <div class="meta-row">
+                            <a class="link-btn" href="https://ailury.com/Chat" target="_blank">Open ailury.com/Chat</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>AIlury Home</h3>
+                        <p>Landing & information architecture. Highlights include marketing blocks.</p>
+                        <div class="meta-row">
+                            <a class="link-btn" href="https://ailury.com/Home" target="_blank">Open ailury.com/Home</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="sec" id="languages-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>Languages</h2>
+                        <div class="board-sub">Languages I speak and understand.</div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h3>English</h3>
+                        <p>English is my first language. I speak it very well and understand it very well.</p>
+                        <div class="level-bar"><div class="bar-fill" style="width: 96%;"></div></div>
+                    </div>
+                    <div class="card">
+                        <h3>German</h3>
+                        <p>I am German. I speak German very well.</p>
+                        <div class="level-bar"><div class="bar-fill" style="width: 99%;"></div></div>
+                    </div>
+                    <div class="card">
+                        <h3>Spanish</h3>
+                        <p>I lived in uruguay for 5 years and on mallorca for 6 months. I understand spanish and speak decently</p>
+                        <div class="level-bar"><div class="bar-fill" style="width: 65%;"></div></div>
+                    </div>
+                    <div class="card">
+                        <h3>Brazilian</h3>
+                        <p>I have been in Brazil for around 4 years and a few months in the Azores. I understand brazilian but don't speak it very well.</p>
+                        <div class="level-bar"><div class="bar-fill" style="width: 40%;"></div></div>
+                    </div>
+                </div>
+            </section>
+            <section class="sec" id="programming-languages-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>Suported Programming Languages</h2>
+                        <div class="board-sub">Programming languages I build my websites with.</div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h3>HTML</h3>
+                        <p>HyperText Markup Language — website skeleton</p>
+                    </div>
+                    <div class="card">
+                        <h3>CSS</h3>
+                        <p>Cascading Style Sheets — gives websites style.</p>
+                    </div>
+                    <div class="card">
+                        <h3>JS</h3>
+                        <p>JavaScript - gives websites functionslity.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="sec" id="drawing-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>Drawings</h2>
+                        <div class="board-sub">My Best drawings.</div>
+                    </div>
+                </div>
+                <div class="drawings-content">
+                    <div class="drawing" style="background-image: url(/src/Gears_Of_Life_Book_Cover.png);" onclick="toggleTimeLaps('/src/Gears_Of_Life_Book_Cover_Time_Laps.mp4', this)"></div>
+                    <div class="drawing" style="background-image: url(/src/The_Light_From_Above.png);" onclick="toggleTimeLaps('/src/The_Light_From_Above_Time_Laps.mp4', this)"></div>
+                    <div class="drawing" style="background-image: url(/src/Red_Sun_Seed.png);" onclick="toggleTimeLaps('/src/Red_Sun_Seed_Time_Laps.mp4', this)"></div>
+                </div>
+            </section>
+            <section class="sec" id="ui-ux-design-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>Design</h2>
+                        <div class="board-sub">Tools I use to design and steps.</div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h3>Tools</h3>
+                        <p>Canva</p>
+                        <p>ChatGPT 5</p>
+                        <p>AIlury Studio</p>
+                        <p>Spck Editor</p>
+                    </div>
+                    <div class="card">
+                        <h3>Steps</h3>
+                        <p>1. Style</p>
+                        <p>2. Layout</p>
+                        <p>3. Color</p>
+                        <p>4. Capture</p>
+                    </div>
+                    <div class="card">
+                        <h3>Stategy</h3>
+                        <p>First I use Canva to decide on the style and layout I want the website to have. Then I make the final design to capture the vision.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="sec" id="me-sec" style="display: block;">
+                <div class="board-header">
+                    <div>
+                        <h2>More About Me</h2>
+                        <div class="board-sub">More information about me.</div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h3>I'm Maximilian de Groot</h3>
+                        <p>Born in 2010.</p>
+                        <p>IQ 111 (from a free online IQ tester).</p>
+                        <p>A passionate programmer.</p>
+                        <p>A intermediate Video Editor.</p>
+                        <p>A passionate designer.</p>
+                        <p>A part time artist.</p>
+                    </div>
+                    <div class="card">
+                        <div class="avatar"></div>
+                        <h3>Social media</h3>
+                        <p>platforms I use and/or post on.</p>
+                        <div class="meta-row">
+                            <a class="link-btn" href="https://youtube.com/@aisisty" target="_blank" rel="noopener noreferrer">YouTube</a>
+                            <a class="link-btn" href="https://x.com/aisisty?s=21" target="_blank" rel="noopener noreferrer">Twitter/X</a>
+                            <a class="link-btn" href="https://m.twitch.tv/leoopenwebandgamedev/home" target="_blank" rel="noopener noreferrer">Twitch</a>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="AIluryLogo"></div>
+                        <h3>AIlury</h3>
+                        <p>My biggest programming projects.</p>
+                        <div class="meta-row">
+                            <button class="link-btn" onclick="showSec('projects-sec')">View my Projects</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="SkillLogo"></div>
+                        <h3>Skills</h3>
+                        <p>My main skills.</p>
+                        <div class="meta-row">
+                            <button class="link-btn" onclick="showSec('skills-sec')">View my Skills</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="sec" id="collection-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>Collections</h2>
+                        <div class="board-sub">I collect the following, as a hobby.</div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h3>LEGO® Ninjago®</h3>
+                        <p>LEGO® Ninjago is a popular building toy series featuring ninja-themed sets and characters, inspired by martial arts and adventure stories.</p>
+                    </div>
+                    <div class="card">
+                        <h3>LEGO® Speed Champions®</h3>
+                        <p>LEGO® Speed Champions is a series of detailed model cars that lets you build and collect miniature versions of famous real-world vehicles, perfect for fans of racing and cars.</p>
+                    </div>
+                    <div class="card">
+                        <h3>LEGO® Comics</h3>
+                        <p>LEGO® Comics are illustrated stories featuring LEGO® characters and worlds, combining humor and adventure in comic book form.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Disclaimer:</h3>
+                        <p>This website is not affiliated with or endorsed by LEGO® Group. The link below directs to LEGO®’s official website.</p>
+                        <div class="meta-row">
+                            <a class="link-btn" href="https://www.lego.com/" target="_blank" rel="noopener noreferrer">LEGO® Official Store (lego.com)</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="sec" id="skills-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>Skills</h2>
+                        <div class="board-sub">A view of my bigger projects.</div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="card">
+                        <h3>Languages</h3>
+                        <p>I speak multiple languages.</p>
+                        <p>German, English, Brazilian and Spanish.</p>
+                        <div class="meta-row">
+                            <button class="link-btn" onclick="showSec('languages-sec')">Languages I speak</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Art</h3>
+                        <p>I am a part time artist.</p>
+                        <p>Click the button below to see 3 of my art works.</p>
+                        <div class="meta-row">
+                            <button class="link-btn" onclick="showSec('drawing-sec')">My Art</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Programming</h3>
+                        <p>I am a passionate programmer.</p>
+                        <p>Click the button below to see some of my projects.</p>
+                        <div class="meta-row">
+                            <button class="link-btn" onclick="showSec('projects-sec')">My Projects</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Designing</h3>
+                        <p>I design my websites.</p>
+                        <p>Click the button below to learn about my design process and what tools I use.</p>
+                        <div class="meta-row">
+                            <button class="link-btn" onclick="showSec('ui-ux-design-sec')">My Projects</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Programming Languages</h3>
+                        <p>I use HTML, CSS and JavaScript to build websites.</p>
+                        <div class="meta-row">
+                            <button class="link-btn" onclick="showSec('programming-languages-sec')">More about these Programming Languages.</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script>
+        function showSec(id) {
+            document.querySelectorAll('.sec').forEach(sec => {
+                sec.style.display = "none";
+            });
+            const targetSec = document.getElementById(id);
+            if (targetSec) {
+                document.getElementById(id).style.display = "block";
+            }
+        }
+        function toggleTimeLaps(path, container) {
+            let video = container.querySelector('.drawingVideo');
+            if (video) {
+                video.remove();
+            } else {
+                video = document.createElement('video');
+                video.className = "drawingVideo";
+                video.src = path;
+                video.autoplay = true;
+                video.onended = () => video.remove();
+                container.appendChild(video);
+                // Optional: handle play promise for better compatibility
+                video.play().catch(err => {
+                    console.warn('Video play failed:', err);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
