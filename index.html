@@ -162,7 +162,7 @@
         background: linear-gradient(180deg, rgba(10,14,28,0.08), rgba(6,8,14,0.15));
         border:1px solid rgba(255,255,255,0.03);
     }
-    .drawings-content {
+    .drawings-content, .personalities-content {
         position:relative;
         display:block;
         padding:20px;
@@ -183,6 +183,15 @@
         flex-direction:column;
         gap:10px;
         transition: transform var(--transition), box-shadow var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+    .personalities-content > .card, .personalities-content > .content {
+        margin-bottom: 20px;
+    }
+    .personalities-content > h2 {
+        font-size: 1.2em;
+        font-weight: bold;
     }
     .drawing {
         width: 100%;
@@ -281,12 +290,34 @@
         transition: transform var(--transition);
         height: 30px;
     }
+    .bottom-bar {
+        display: inline-flex;
+        padding: 0;
+        border-radius: 0;
+        font-size: 1em;
+        background: transparent;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        color: inherit;
+        transition: 1s;
+        height: 5px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
     .bar-fill {
         height: 100%;
         width: 0;
         background: rgba(var(--accent-1), 0.9);
         border: none;
         border-radius: 10px;
+    }
+    .bottom-bar-fill {
+        height: 100%;
+        width: 0;
+        background: rgba(var(--accent-1), 0.9);
+        border: none;
+        border-radius: 0;
     }
     #programming-languages-sec .card {
         height: 70px;
@@ -305,6 +336,20 @@
     }
     #hero-text {
         width: calc(100% - 90px);
+    }
+    a:not(.link-btn) {
+        color: rgba(var(--accent-1), 0.9);
+        font-style: italic;
+    }
+    .checkmark {
+        font-size: 1.2em;
+        color: green;
+        margin-right: 2px;
+    }
+    .cross {
+        font-size: 1.2em;
+        color: red;
+        margin-right: 2px;
     }
     /* responsive adjustments */
     @media(max-width:900px){
@@ -339,6 +384,8 @@
                     <div class="pill" onclick="showSec('programming-languages-sec')">Programming since: late 2023</div>
                     <div class="pill" onclick="showSec('me-sec')">Available: always</div>
                     <div class="pill" onclick="showSec('languages-sec')">Languages: 4</div>
+                    <div class="pill" onclick="showSec('projects-sec')">Projects: 4</div>
+                    <div class="pill" onclick="showSec('personalities-sec')">Personality: INTP-A</div>
                 </div>
                 <div class="row">
                     <div class="pill" onclick="showSec('programming-languages-sec')">Languages: HTML · CSS · JavaScript</div>
@@ -382,6 +429,11 @@
                         <div class="meta-row">
                             <a class="link-btn" href="https://ailury.com/Home" target="_blank">Open ailury.com/Home</a>
                         </div>
+                    </div>
+                    <div class="card">
+                        <h3>AIlury Learn</h3>
+                        <p>Exercises for geography, math, and time, along with a chatbot, calendar, and feature shop.</p>
+                        <p>a work in progress, still not accessible online.</p>
                     </div>
                 </div>
             </section>
@@ -434,6 +486,176 @@
                     <div class="card">
                         <h3>JS</h3>
                         <p>JavaScript - gives websites functionslity.</p>
+                    </div>
+                </div>
+            </section>
+            <section class="sec" id="personalities-sec">
+                <div class="board-header">
+                    <div>
+                        <h2>My Personality</h2>
+                        <div class="board-sub">My Personality avaluated by <a href="https://www.16personalities.com/" target="_blank" rel="noopener noreferrer">16personalities.com</a>.<br>The bar at the bottom indicates how much I agree.</div>
+                    </div>
+                </div>
+                <div class="personalities-content">
+                    <div class="card">
+                        As an INTP (Logician), I bring a strong blend of intellectual curiosity, analytical skills, and a passion for abstract thinking. I thrive on exploring complex concepts and uncovering the fundamental principles that shape the world. My approach is grounded in logic and reason, valuing facts over emotions or conventional viewpoints.
+                        <br>
+                        <br>
+                        With a deep commitment to continuous learning, I delve into subjects that spark my interest, aiming to understand systems and theories at a detailed level. This combination of intellectual rigor and creative problem-solving drives my success across both personal and professional endeavors.
+                        <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 95%;"></div></div>
+                    </div>
+                    <div class="card">
+                        Known for strong cognitive abilities and a keen analytical mindset, I often excel in the realm of ideas and abstract thinking. I value independence and autonomy, preferring to work at my own pace while following my own methods and interests.
+                        <br>
+                        <br>
+                        While this approach fosters creativity and focus, it also requires balancing intellectual freedom with the practical demands of structure and deadlines—a challenge I continually navigate to maintain productivity and growth.
+                        <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 80%;"></div></div>
+                    </div>
+                    <div class="card">
+                        I thrive in professional environments that challenge my intellect and encourage deep problem-solving. Fields such as scientific research, software development, data analysis, and philosophical inquiry align well with my logical and systematic approach. I excel at identifying inconsistencies, developing theoretical models, and delivering innovative solutions.
+                        <br>
+                        <br>
+                        While my career path has involved exploring diverse interests, I have found that combining intellectual stimulation with flexibility is key to maintaining motivation and achieving long-term success. Navigating routine tasks and organizational dynamics remains an area of ongoing focus.
+                        <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 80%;"></div></div>
+                    </div>
+                    <h2>My Strengths</h2>
+                    <div class="content">
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Novel Perspectives</h3>
+                            <p>My ability to think beyond traditional frameworks enables me to develop innovative solutions to complex challenges.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 60%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Driven by Curiosity</h3>
+                            <p>My genuine eagerness to learn drives continuous growth and consistently expands my skill set.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Independent and Self-Directed</h3>
+                            <p>My strong preference for autonomous work enables me to stay focused and fully engaged in tasks without requiring constant supervision.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 100%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Quick to See Patterns</h3>
+                            <p>I swiftly recognize hidden connections between ideas, enabling me to identify solutions that others may miss.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 99%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Adaptability</h3>
+                            <p>I adjust comfortably to new information or changing circumstances, maintaining clarity even when others feel overwhelmed.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 70%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Truth-Focused</h3>
+                            <p>I place great emphasis on fact-based understanding, ensuring my decisions are soundly reasoned and thoroughly researched.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                    </div>
+                    <h2>My Weaknesses</h2>
+                    <div class="content">
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Difficulty Completing Tasks</h3>
+                            <p>I tend to lose interest in routine or repetitive tasks, which can sometimes challenge my ability to maintain focus through to completion.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 100%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Struggling with Practicalities</h3>
+                            <p>My preference for theoretical exploration can occasionally result in overlooking key details necessary for successful execution.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 10%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Frequent Procrastination</h3>
+                            <p>I sometimes postpone routine tasks until deadlines approach, which can lead to increased stress and impact the quality of my work.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 5%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Resistant to Structure</h3>
+                            <p>I find rigid systems, rules, and procedures demotivating, which can make traditional workplaces or highly structured processes particularly challenging.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 0%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Underpromoting Myself</h3>
+                            <p>Self-promotion and networking can be challenging for me, which may result in my strengths and contributions receiving less recognition.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 80%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Easily Distracted</h3>
+                            <p>My naturally inquisitive mind can sometimes divert my focus from primary responsibilities, drawing me into engaging but unrelated side pursuits.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 30%;"></div></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        My personal growth focuses on balancing intellectual pursuits with emotional and social development. While my strengths lie in logical analysis, I recognize the value of emotional intelligence and effective communication in building meaningful connections and navigating social environments.
+                        <br>
+                        <br>
+                        Additionally, I am committed to translating ideas into action. By setting clear goals, improving time management, and following through on projects, I aim to turn innovative concepts into tangible outcomes that make a real impact.
+                        <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 80%;"></div></div>
+                    </div>
+                    <h2>My Strengths</h2>
+                    <div class="content">
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Highly Reflective</h3>
+                            <p>I regularly engage in self-reflection and critical questioning, which allows me to gain deeper insights and increased personal clarity over time.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 80%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Inventive Thinking</h3>
+                            <p>My imagination enables me to approach challenges creatively, generating fresh ideas that enhance my ability to overcome obstacles.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 99%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Embracing Complexity</h3>
+                            <p>I embrace complex ideas and uncertain situations, viewing them as valuable opportunities for growth and development.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Open to Self-Improvement</h3>
+                            <p>I remain open to new methods, ideas, and constructive feedback, actively seeking opportunities for self-improvement and growth.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Seeking Authenticity</h3>
+                            <p>I am committed to staying authentic and true to my principles, even when it means challenging societal pressures or majority opinions.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="checkmark">✓</span> Comfortable Being Alone</h3>
+                            <p>I find contentment in solitude, which supports my personal growth through focused learning and meaningful reflection.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 90%;"></div></div>
+                        </div>
+                    </div>
+                    <h2>My Weaknesses</h2>
+                    <div class="content">
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Overanalyzing Minor Decisions</h3>
+                            <p>My tendency to scrutinize even minor decisions in depth can sometimes delay progress and result in missed opportunities.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 100%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Difficulty Expressing Emotions</h3>
+                            <p>My tendency to rationalize emotions can sometimes create a barrier to deeper self-understanding on an emotional level.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 5%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Lost in Daydreams</h3>
+                            <p>I sometimes become deeply absorbed in thought, which can lead to a temporary disconnection from the present and delay progress toward personal goals.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 100%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Struggling with Routines</h3>
+                            <p>Maintaining consistent habits can be challenging for me, which may impact my pace of personal progress.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Stubborn Skepticism</h3>
+                            <p>My critical thinking can sometimes lean toward skepticism, leading me to prematurely dismiss valuable insights or guidance.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 1%;"></div></div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="cross">✘</span> Neglecting Self-Care</h3>
+                            <p>When deeply engaged in intellectual or abstract pursuits, I may occasionally overlook basic self-care, which can affect my overall well-being.</p>
+                            <div class="bottom-bar"><div class="bottom-bar-fill" style="width: 85%;"></div></div>
+                        </div>
                     </div>
                 </div>
             </section>
